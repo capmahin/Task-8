@@ -1,19 +1,43 @@
-# ThreeJS with Vite Starter Pack
-### Prerequisites
-Before you start, make sure you have Node.js installed on your machine: (https://nodejs.org/en/download/)
+# Performance Test & Optimization
 
-### Installation
-Once you've cloned or downloaded this project file to your local machine, navigate to this project directory in your terminal.
+This project demonstrates the performance difference between a naive implementation and an optimized implementation of rendering 300 cubes using Three.js.
 
-Run the following command to install the necessary dependencies:
+## What was implemented
 
-``` bash
-npm install
-```
-### Running the project
-To start the development server, run the following command:
+### Version 1 (Naive Implementation)
+- Created 300 individual Mesh objects, each with its own geometry and material
+- Each cube has unique position, color, and animation properties
+- Higher CPU and GPU overhead due to multiple draw calls
 
-``` bash
-npm run dev
-```
-This will start the server and open your default browser to your localhost. The site will reload automatically as you make changes to your code.
+### Version 2 (Optimized Implementation)
+- Uses a single InstancedMesh with 300 instances
+- Shares geometry and material across all instances
+- Significantly reduced draw calls from 300 to 1
+- Better GPU utilization and lower CPU overhead
+
+### App.js
+- Manages switching between Version 1 and Version 2
+- Handles the comparison view showing both versions side-by-side
+- Implements proper cleanup and disposal of resources when switching views
+- Added DOMContentLoaded check for proper initialization
+- Fixed FPS update intervals and resource management
+
+### Index.html
+- Provides UI with buttons to switch between versions
+- Displays performance comparison information
+- Shows FPS counters for both versions
+- Responsive layout with single view and comparison view
+- Properly loads Three.js from CDN and local script files
+
+## Key Optimizations
+- Fixed renderer sizing issues that prevented cubes from being visible
+- Added proper window resize handling for both camera and renderer
+- Implemented safe DOM element removal to prevent errors
+- Improved resource disposal to prevent memory leaks
+- Enhanced animation loop efficiency
+
+## Interactive Controls
+- **Rotate**: Click and drag to rotate the camera around the scene
+- **Zoom**: Scroll up/down to zoom in/out
+- **Pan**: Right-click and drag to pan the view
+- **Smooth damping**: Natural-feeling camera movements with automatic slowing
